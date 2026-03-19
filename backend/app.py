@@ -20,7 +20,11 @@ if not OPENAI_API_KEY:
     raise RuntimeError("OPENAI_API_KEY is not set. Please set it in your environment or in a .env file.")
 
 OPENAI_BASE_URL = os.getenv("OPENAI_BASE_URL")
-client = OpenAI(api_key=OPENAI_API_KEY, base_url=OPENAI_BASE_URL) if OPENAI_BASE_URL else OpenAI(api_key=OPENAI_API_KEY)
+client = OpenAI(
+    api_key=OPENAI_API_KEY,
+    base_url=OPENAI_BASE_URL if OPENAI_BASE_URL else None,
+    timeout=120.0,
+) if OPENAI_BASE_URL else OpenAI(api_key=OPENAI_API_KEY, timeout=120.0)
 
 app = FastAPI(title="FAQ RAG Assistant")
 
